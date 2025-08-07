@@ -68,8 +68,10 @@ masa_NP_8A=(masa_pfilm_FF-masa_pfilm)*1e-3 #g
 
 m_pfilm_norm = m_parafilm/(masa_pfilm_virgen*1e-3) #emu/g  -  Normalizo
 
-(pend,ord),_=curve_fit(lineal,H_parafilm,m_pfilm_norm) # (emu/g , emu/g/G) - Ordenada/Pendiente 
+(pend,ord),pcov=curve_fit(lineal,H_parafilm,m_pfilm_norm) # (emu/g , emu/g/G) - Ordenada/Pendiente 
 
+susceptibilidad_parafilm=ufloat(pend,np.sqrt(np.diag(pcov))[0]) # emu/g/G
+print(f'Susceptibilidad Parafilm: {susceptibilidad_parafilm:.1ue} emu/g/G')
 m_aux=(ord + pend*H_8A)*(masa_pfilm*1e-3)   #emu - Escaleo
 m_8A_sin_diamag=m_8A-m_aux #emu   - Resto
 
